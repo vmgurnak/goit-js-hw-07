@@ -42,3 +42,13 @@
 .gallery__link:hover {
   cursor: zoom-in;
 }
+
+.modal {
+  max-width: 1140px;
+}
+
+.modal img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

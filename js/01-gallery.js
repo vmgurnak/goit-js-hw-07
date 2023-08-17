@@ -31,23 +31,31 @@
 // Этот функционал не обязателен при сдаче задания, но будет хорошей дополнительной практикой.
 // Добавь закрытие модального окна по нажатию клавиши Escape. Сделай так, чтобы прослушивание клавиатуры было только пока открыто модальное окно. У библиотеки basicLightbox есть метод для программного закрытия модального окна.
 
-import { galleryItems } from "./gallery-items.js";
+import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-console.log(galleryItems);
+//   {
+//     preview:
+//       'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__480.jpg',
+//     original:
+//       'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820_1280.jpg',
+//     description: 'Hokkaido Flower',
+//   }
 
 // 1. Создание и рендер разметки по массиву данных galleryItems и предоставленному шаблону элемента галереи.
 
 // Поиск ul.list
-const list = document.querySelector(".gallery");
-console.log(list);
+const container = document.querySelector('.gallery');
+// console.log(container);
 
 // Создание разметки, метода map преобразование массива galleryItems, создание нового массива с элемнтом строки, деструктуризация объекта, метод join преобразование массива в строку
 
-const markup = galleryItems
-  .map(
-    ({ preview, original, description }) =>
-      `<li class="gallery__item">
+function createMarkup(arr) {
+  // функция возвращает строку с разметкой
+  return arr
+    .map(
+      ({ preview, original, description }) =>
+        `<li class="gallery__item">
   <a class="gallery__link" href="${original}">
     <img
       class="gallery__image"
@@ -57,9 +65,50 @@ const markup = galleryItems
     />
   </a>
 </li>`
-  )
-  .join("");
+    )
+    .join('');
+}
 
 // Добавление строки разметки в DOM дерево, метод insertAdjacentHTML, "beforebegin" - внутри elem, после всех детей
+// Вызов функции reateMarkup(arr) с параметром galleryItems
 
-list.insertAdjacentHTML("beforeend", markup);
+container.insertAdjacentHTML('beforeend', createMarkup(galleryItems));
+
+// 2. Реализация делегирования на ul.gallery и получение url большого изображения.
+
+// Слушатель по click на ul.gallery
+container.addEventListener('click', handlerImageClick);
+
+// Коллбєк-функция для клика
+function handlerImageClick(evt) {
+  // Сброс стандартных действий при клике
+  evt.preventDefault();
+
+  // Проверка, где делается клик по названию класса img - gallery__image
+  if (!evt.target.classList.contains('gallery__image')) {
+    return;
+  }
+
+  // Получение data атрибута при клике
+  // Деструктуризация data-source
+  const { source } = evt.target.dataset;
+  console.log(source);
+
+  // Получение одного объекта при клике, метод Find поиск по атрбуту data-source
+  const galleryItem = galleryItems.find(({ original }) => original === source);
+  console.log(galleryItem);
+
+  // Подключение модального окна, библиотека basicLightbox
+  const instance = basicLightbox.create(`
+     <div class="modal">
+        <img src="${galleryItem.original}" alt="${galleryItem.description}" width="1280">
+     </div>
+  `);
+
+  instance.show();
+
+  // instance.close();
+}
+
+// 3. Подключение скрипта и стилей библиотеки модального окна basicLightbox. Используй CDN сервис jsdelivr и добавь в проект ссылки на минифицированные (.min) файлы библиотеки.
+// console.log(basicLightbox);
