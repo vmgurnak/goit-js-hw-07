@@ -75,6 +75,8 @@ function createMarkup(arr) {
 container.insertAdjacentHTML('beforeend', createMarkup(galleryItems));
 
 // 2. Реализация делегирования на ul.gallery и получение url большого изображения.
+// 3. Подключение скрипта и стилей библиотеки модального окна basicLightbox. Используй CDN сервис jsdelivr и добавь в проект ссылки на минифицированные (.min) файлы библиотеки.
+// console.log(basicLightbox);
 
 // Слушатель по click на ul.gallery
 container.addEventListener('click', handlerImageClick);
@@ -105,10 +107,28 @@ function handlerImageClick(evt) {
      </div>
   `);
 
+  //   console.log(instance);
+
   instance.show();
 
-  // instance.close();
+  // Слушатель события нажатия клавиши
+  document.addEventListener('keydown', handlerEsc);
+  // Коллбэк-функция при нажатии клавиши с проверкой Esc
+  function handlerEsc(evt) {
+    if (evt.code === 'Escape') {
+      console.log('Нажата клавиша Esc');
+      //  Закрытие модального окна
+      instance.close();
+    }
+  }
 }
 
-// 3. Подключение скрипта и стилей библиотеки модального окна basicLightbox. Используй CDN сервис jsdelivr и добавь в проект ссылки на минифицированные (.min) файлы библиотеки.
-// console.log(basicLightbox);
+// Событие клавиатуры
+// document.addEventListener('keydown', handlerEsc);
+
+// function handlerEsc(evt) {
+//   if (evt.code === 'Escape') {
+//     console.log('Нажата клавиша Esc');
+//     instance.close();
+//   }
+// }
