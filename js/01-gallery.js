@@ -116,10 +116,10 @@ function handlerImageClick(evt) {
   }
 }
 
-const instance = basicLightbox.create(`
-     <div class="modal">
-        <img src="${galleryItem.original}" alt="${galleryItem.description}" width="1280">
-     </div>
-  ` {onShow: (instance) => {}, onClose: (instance) => {}});
+// const instance = basicLightbox.create(`
+//      <div class="modal">
+//         <img src="${galleryItem.original}" alt="${galleryItem.description}" width="1280">
+//      </div>
+//   ` {onShow: (instance) => {}, onClose: (instance) => {}});
 
-  instance.show()
+//   instance.show()
