@@ -34,21 +34,13 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-//   {
-//     preview:
-//       'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__480.jpg',
-//     original:
-//       'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820_1280.jpg',
-//     description: 'Hokkaido Flower',
-//   }
-
 // 1. Создание и рендер разметки по массиву данных galleryItems и предоставленному шаблону элемента галереи.
 
 // Поиск ul.list
 const container = document.querySelector('.gallery');
 // console.log(container);
 
-// Создание разметки, метода map преобразование массива galleryItems, создание нового массива с элемнтом строки, деструктуризация объекта, метод join преобразование массива в строку
+// Создание разметки, метод ma,p преобразование массива galleryItems, создание нового массива с элементом строки, деструктуризация объекта, метод join преобразование массива в строку
 
 function createMarkup(arr) {
   // функция возвращает строку с разметкой
@@ -75,10 +67,10 @@ function createMarkup(arr) {
 container.insertAdjacentHTML('beforeend', createMarkup(galleryItems));
 
 // 2. Реализация делегирования на ul.gallery и получение url большого изображения.
-// 3. Подключение скрипта и стилей библиотеки модального окна basicLightbox. Используй CDN сервис jsdelivr и добавь в проект ссылки на минифицированные (.min) файлы библиотеки.
+// 3. Подключение скрипта и стилей библиотеки модального окна basicLightbox. Используется CDN сервис jsdelivr, добавлены в проект ссылки на минифицированные (.min) файлы библиотеки.
 // console.log(basicLightbox);
 
-// Слушатель по click на ul.gallery
+// Слушатель по click на ul.gallery, делегирование клика
 container.addEventListener('click', handlerImageClick);
 
 // Коллбєк-функция для клика
@@ -91,16 +83,16 @@ function handlerImageClick(evt) {
     return;
   }
 
-  // Получение data атрибута при клике
+  // Получение data атрибута(ссылка на оригинальное изображение) при клике
   // Деструктуризация data-source
   const { source } = evt.target.dataset;
   console.log(source);
 
-  // Получение одного объекта при клике, метод Find поиск по атрбуту data-source
+  // Получение выбранного объекта при клике, метод Find поиск по атрбуту data-source
   const galleryItem = galleryItems.find(({ original }) => original === source);
   console.log(galleryItem);
 
-  // Подключение модального окна, библиотека basicLightbox
+  // Подключение модального окна с разметкой, библиотека basicLightbox
   const instance = basicLightbox.create(`
      <div class="modal">
         <img src="${galleryItem.original}" alt="${galleryItem.description}" width="1280">
@@ -111,6 +103,7 @@ function handlerImageClick(evt) {
 
   instance.show();
 
+  // Закрытие модального окна клавишей Esc
   // Слушатель события нажатия клавиши
   document.addEventListener('keydown', handlerEsc);
   // Коллбэк-функция при нажатии клавиши с проверкой Esc
@@ -123,12 +116,10 @@ function handlerImageClick(evt) {
   }
 }
 
-// Событие клавиатуры
-// document.addEventListener('keydown', handlerEsc);
+const instance = basicLightbox.create(`
+     <div class="modal">
+        <img src="${galleryItem.original}" alt="${galleryItem.description}" width="1280">
+     </div>
+  ` {onShow: (instance) => {}, onClose: (instance) => {}});
 
-// function handlerEsc(evt) {
-//   if (evt.code === 'Escape') {
-//     console.log('Нажата клавиша Esc');
-//     instance.close();
-//   }
-// }
+  instance.show()
