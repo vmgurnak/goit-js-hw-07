@@ -31,16 +31,16 @@
 // Этот функционал не обязателен при сдаче задания, но будет хорошей дополнительной практикой.
 // Добавь закрытие модального окна по нажатию клавиши Escape. Сделай так, чтобы прослушивание клавиатуры было только пока открыто модальное окно. У библиотеки basicLightbox есть метод для программного закрытия модального окна.
 
+// Импорт массива объектов galleryItems
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
 
-// 1. Создание и рендер разметки по массиву данных galleryItems и предоставленному шаблону элемента галереи.
+// 1. Создание и рендер разметки по массиву данных galleryItems и шаблону элемента галереи.
 
 // Поиск ul.list
 const container = document.querySelector('.gallery');
 // console.log(container);
 
-// Создание разметки, метод ma,p преобразование массива galleryItems, создание нового массива с элементом строки, деструктуризация объекта, метод join преобразование массива в строку
+// Функция для создание разметки, метод map преобразование массива galleryItems, создание нового массива с элементом строки, деструктуризация объекта, метод join преобразование массива в строку
 
 function createMarkup(arr) {
   // функция возвращает строку с разметкой
@@ -78,7 +78,7 @@ function handlerImageClick(evt) {
   // Сброс стандартных действий при клике
   evt.preventDefault();
 
-  // Проверка, где делается клик по названию класса img - gallery__image
+  // Проверка от обратного, где делается клик по названию класса gallery__image на теге  img
   if (!evt.target.classList.contains('gallery__image')) {
     return;
   }
@@ -86,11 +86,11 @@ function handlerImageClick(evt) {
   // Получение data атрибута(ссылка на оригинальное изображение) при клике
   // Деструктуризация data-source
   const { source } = evt.target.dataset;
-  console.log(source);
+  // console.log(source);
 
   // Получение выбранного объекта при клике, метод Find поиск по атрбуту data-source
   const galleryItem = galleryItems.find(({ original }) => original === source);
-  console.log(galleryItem);
+  // console.log(galleryItem);
 
   // Подключение модального окна с разметкой, библиотека basicLightbox
   const instance = basicLightbox.create(`
@@ -99,14 +99,13 @@ function handlerImageClick(evt) {
      </div>
   `);
 
-  //   console.log(instance);
-
   instance.show();
 
   // Закрытие модального окна клавишей Esc
   // Слушатель события нажатия клавиши
   document.addEventListener('keydown', handlerEsc);
-  // Коллбэк-функция при нажатии клавиши с проверкой Esc
+
+  // Коллбэк-функция при нажатии клавиши с проверкой Esc, закрытие модального окна
   function handlerEsc(evt) {
     if (evt.code === 'Escape') {
       console.log('Нажата клавиша Esc');
@@ -114,12 +113,16 @@ function handlerImageClick(evt) {
       instance.close();
     }
   }
+  // console.log(instance);
 }
 
+// Второй вариант с свойствами onShow:, onClose:
 // const instance = basicLightbox.create(`
 //      <div class="modal">
 //         <img src="${galleryItem.original}" alt="${galleryItem.description}" width="1280">
 //      </div>
-//   ` {onShow: (instance) => {}, onClose: (instance) => {}});
-
+//   `,  {
+//       onShow: () => document.addEventListener('keydown', handlerEsc),
+//       onClose: () => document.removeEventListener('keydown', handlerEsc)
+//     }
 //   instance.show()

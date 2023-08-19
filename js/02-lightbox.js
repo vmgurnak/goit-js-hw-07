@@ -19,18 +19,16 @@
 // 3. Инициализация библиотеки после того как элементы галереи созданы и добавлены в ul.gallery. Для этого ознакомься с документацией SimpleLightbox - в первую очередь секции «Usage» и «Markup».
 // 4. Посмотри в документации секцию «Options» и добавь отображение подписей к изображениям из атрибута alt. Пусть подпись будет снизу и появляется через 250 миллисекунд после открытия изображения.
 
+// Импорт массива объектов
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
-
-console.log(galleryItems);
+// console.log(galleryItems);
 
 // 1. Создание и рендер разметки по массиву данных galleryItems и предоставленному шаблону элемента галереи. Используй готовый код из первого задания.
 
 // Поиск ul.list
 const container = document.querySelector('.gallery');
-// console.log(container);
 
-// Создание разметки, метод ma,p преобразование массива galleryItems, создание нового массива с элементом строки, деструктуризация объекта, метод join преобразование массива в строку
+// Функция createMarkup(arr) для создание разметки, метод map, преобразование массива galleryItems, создание нового массива с элементом строки, деструктуризация объекта, метод join преобразование массива в строку
 
 function createMarkup(arr) {
   // функция возвращает строку с разметкой
@@ -51,7 +49,7 @@ function createMarkup(arr) {
 }
 
 // Добавление строки разметки в DOM дерево, метод insertAdjacentHTML, "beforebegin" - внутри elem, после всех детей
-// Вызов функции reateMarkup(arr) с параметром galleryItems
+// Вызов функции reateMarkup(arr) с параметром массив объектов galleryItems
 
 container.insertAdjacentHTML('beforeend', createMarkup(galleryItems));
 
@@ -59,10 +57,11 @@ container.insertAdjacentHTML('beforeend', createMarkup(galleryItems));
 
 // 3. Инициализация библиотеки после того как элементы галереи созданы и добавлены в ul.gallery. Для этого ознакомься с документацией SimpleLightbox - в первую очередь секции «Usage» и «Markup».
 
-// console.log(simplelightbox);
-
 const lightbox = new SimpleLightbox('.gallery a', {
   /* options */
+  // Добавление подписи из атрибута 'alt' и задержки появления подписи
   captionsData: 'alt',
   captionDelay: 250,
 });
+
+// console.log(lightbox);
