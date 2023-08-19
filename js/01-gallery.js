@@ -94,9 +94,7 @@ function handlerImageClick(evt) {
 
   // Подключение модального окна с разметкой, библиотека basicLightbox
   const instance = basicLightbox.create(`
-     <div class="modal">
-        <img src="${galleryItem.original}" alt="${galleryItem.description}" width="1280">
-     </div>
+          <img src="${galleryItem.original}" alt="${galleryItem.description}" width="1280">
   `);
 
   instance.show();
@@ -111,8 +109,16 @@ function handlerImageClick(evt) {
       console.log('Нажата клавиша Esc');
       //  Закрытие модального окна
       instance.close();
+      // Снятие слушателя
+      document.removeEventListener('keydown', handlerEsc);
     }
+    // Снятие слушателя
+    document.removeEventListener('keydown', handlerEsc);
+    // console.log(evt.code);
   }
+
+  // document.removeEventListener('keydown', handlerEsc);
+
   // console.log(instance);
 }
 
